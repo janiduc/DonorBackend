@@ -22,4 +22,8 @@ function authenticateToken(req, res, next) {
     })
 }
 
-module.exports = { authenticateToken };
+function verifyToken(token) {
+    return jwt.verify(token, secretKey);
+}
+
+module.exports = { authenticateToken, verifyToken };
