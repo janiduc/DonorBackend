@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const { secretKey } = require('../configuration/jwtConfig'); // Import the secret key from the configuration
+//const { secretKey } = require('../configuration/jwtConfig'); // Import the secret key from the configuration
+const secretKey = 'your_secret_key'; // Replace with your own secret key
 
 function generateToken(user) {
     const payload = {
