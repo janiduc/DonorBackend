@@ -17,6 +17,14 @@ async function getChildById(childId) {
     }
 }
 
+// async function getChildByName(name) {
+//     try {
+//         return await Children.findOne({ name: name }); // Search for a child by name
+//     } catch (error) {
+//         throw new Error('Error fetching child by name: ' + error.message);
+//     }
+// }
+
 async function getAllChildren() {
     try {
         return await Children.find({}).populate('parentId', 'name email');

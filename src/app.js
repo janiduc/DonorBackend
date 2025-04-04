@@ -3,6 +3,7 @@ const signupRoute = require("./routes/signup");
 const loginRoute = require("./routes/login")
 const userRoute = require("./routes/user"); // Import the user route
 const childrenRoute = require("./routes/children"); // Import the children route
+const eldersRoute = require("./routes/elders"); // Import the elders route
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -21,6 +22,7 @@ app.use("/user", signupRoute);
 app.use("/auth", loginRoute); // Use the login route
 app.use("/api", userRoute); // Use the user route
 app.use("/api", childrenRoute); // Use the children route
+app.use("/api", eldersRoute); // Use the elders route
 
 app.listen(port, () => {
     console.log(`Server is running on port http://localhost:${port}`);

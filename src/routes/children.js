@@ -10,7 +10,27 @@ router.use(cors());
 router.post('/children', authMiddleware.authenticateToken, childrenController.addChild);
 
 // Get a specific child by ID
-router.get('/children/:id', authMiddleware.authenticateToken, childrenController.getChildById);
+//router.get('/children/:id', authMiddleware.authenticateToken, childrenController.getChildById);
+
+router.get('/children/search', authMiddleware.authenticateToken, async (req, res) => {
+    try {
+        const { name, guardienName, contactNumber } = req.query;
+
+        // Build a dynamic query object
+        const query = {};
+        if (name) query.name = { $regex: name, $options: 'i' }; // Case-insensitive search
+        if (guardienName) query.guardienName = { $regex: guardienName, $options: 'i' };
+        if (contactNumber) query.contactNumber = { $regex: contactNumber, $options: 'i' };
+
+        const children = await children.find(query);
+        res.status(200).json(children);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Route to search for a child by name
+//router.get('/children/name/:name', authMiddleware.authenticateToken, childrenController.getChildByName);
 
 // Get all children
 router.get('/children', authMiddleware.authenticateToken, childrenController.getAllChildren);

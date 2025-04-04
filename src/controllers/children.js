@@ -21,6 +21,19 @@ async function getChildById(req, res) {
     }
 }
 
+// async function getChildByName(req, res) {
+//     try {
+//         const name = req.params.name; // Extract the name from the request parameters
+//         const child = await childrenService.getChildByName(name);
+//         if (!child) {
+//             return res.status(404).json({ message: 'Child not found' });
+//         }
+//         res.status(200).json(child);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// }
+
 async function getAllChildren(req, res) {
     try {
         const children = await childrenService.getAllChildren();
