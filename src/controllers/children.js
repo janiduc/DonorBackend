@@ -55,6 +55,25 @@ async function updateChild(req, res) {
     }
 }
 
+const updateChildDetails = async () => {
+    console.log("Updating child:", selectedChild); // Debugging
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:5000/api/children/${selectedChild._id}`,
+        selectedChild,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      alert("Child updated successfully!");
+      closeUpdateModal();
+      fetchAllChildren(); // Refresh the list
+    } catch (error) {
+      alert("Error updating child: " + error.message);
+    }
+  };
+
 async function deleteChild(req, res) {
     try {
         const child = await childrenService.deleteChild(req.params.id);
@@ -67,4 +86,13 @@ async function deleteChild(req, res) {
     }
 }
 
-module.exports = { addChild, getChildById, getAllChildren, updateChild, deleteChild };
+async function searchChild(req, res){
+    try {
+        const children = await childrenService.searchChild(req);
+        res.status(200).json(children);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports = { addChild, getChildById, getAllChildren, updateChild, deleteChild, searchChild, updateChildDetails };

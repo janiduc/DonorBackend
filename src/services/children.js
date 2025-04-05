@@ -49,4 +49,21 @@ async function deleteChild(childId) {
     }
 }
 
-module.exports = { addChild, getChildById, getAllChildren, updateChild, deleteChild };
+async function searchChild(req){
+    try {
+        const { name, guardienName, contactNumber } = req.query;
+        //console.log("gurduanName" + guardienName)
+
+        // Build a dynamic query object
+        const query = {};
+        if (name) query.name = { $regex: name, $options: 'i' }; // Case-insensitive search
+        if (guardienName) query.guardienName = { $regex: guardienName, $options: 'i' };
+        if (contactNumber) query.contactNumber = { $regex: contactNumber, $options: 'i' };
+
+        return await Children.find(query);
+    } catch (error) {
+        throw new Error('Error fetching child: ' + error.message);
+    }
+}
+
+module.exports = { addChild, getChildById, getAllChildren, updateChild, deleteChild, searchChild };
